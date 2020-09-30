@@ -2,7 +2,7 @@
 """
 Created on Tue Sep 29 21:04:36 2020
 
-@author: YCP
+@author: Mehmet Eyüpoğlu
 """
 
 # hi = "Hello there"
