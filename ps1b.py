@@ -85,9 +85,7 @@ while current_savings <= portion_down_payment:
     
     if months > 0 and months % 6 == 0: 
         annual_salary = annual_salary + annual_raise
-        # print("Months: ", months)
-        # print("Annual raise", annual_raise)
-        # print("Annual salary", annual_salary)
+        
         
     investment_return = current_savings * r / 12
     current_savings += annual_salary*portion_saved/12 + investment_return
