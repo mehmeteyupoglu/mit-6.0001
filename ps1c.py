@@ -85,8 +85,8 @@ portion_down_payment = float(2500000)
 r = 0.04
 months = 36
 semi_annual_raise = float(0.07)
+high = 10000
+low = 0
 
-while 
+while abs(current_savings - portion_down_payment) > 100:
     
-    
-print("Months => ", months)

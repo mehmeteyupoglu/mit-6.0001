@@ -2,32 +2,41 @@
 """
 Created on Thu Oct  1 09:54:28 2020
 
-@author: YCP
+@author: Mehmet Eyüpoğlu
 """
 
-# def f( x ):
-#     x = x + 1
-#     print('in f(x): x =', x)
-#     return x
-# x = 3
-# z = f( x )
+# def factorial(n): 
+#     if n == 1: 
+#         return 1
+#     elif n == 0: 
+#         return 0
+#     else: 
+#         return n * factorial(n-1)
+    
+# b = factorial(5)
+# c = factorial (3)
 
-# def f(y):
-#     x = 1
-#     x += 1
-#     print(y)
-# x = 5
-# f(x)
-# print(x)
+# print(b, c)
+# print(factorial(5))
 
-def g(y):
-    print(x)
-    print(x + 1)
-x = 5
-g(x)
-print(x)
-def h(y):
-    x += 1
-x = 5
-h(x)
-print(x)
+# def fact(n): 
+#     if n == 1: 
+#         return 1
+#     elif n == 0: 
+#         return 0
+#     else: 
+#         result = 1
+#         while n > 0: 
+#             result = result * n 
+#             n -= 1
+#             print("n is", n)
+#     return result 
+# print(fact(5))
+
+def mult(a,b): 
+    if b == 1: 
+        return a
+    else: 
+        return a + mult(a, b-1)
+    
+print(mult(4,5))
