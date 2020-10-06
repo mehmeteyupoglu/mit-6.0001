@@ -5,38 +5,77 @@ Created on Thu Oct  1 09:54:28 2020
 @author: Mehmet Eyüpoğlu
 """
 
-# def factorial(n): 
-#     if n == 1: 
-#         return 1
-#     elif n == 0: 
-#         return 0
-#     else: 
-#         return n * factorial(n-1)
-    
-# b = factorial(5)
-# c = factorial (3)
 
-# print(b, c)
-# print(factorial(5))
 
-# def fact(n): 
-#     if n == 1: 
-#         return 1
-#     elif n == 0: 
-#         return 0
-#     else: 
-#         result = 1
-#         while n > 0: 
-#             result = result * n 
-#             n -= 1
-#             print("n is", n)
-#     return result 
-# print(fact(5))
+# def f( x ):
+#     x = x + 1
+#     print('in f(x): x =', x)
+#     return x
+# x = 3
+# z = f( x )
 
-def mult(a,b): 
-    if b == 1: 
-        return a
-    else: 
-        return a + mult(a, b-1)
-    
-print(mult(4,5))
+# def f(y):
+#     x = 1
+#     x += 1
+#     print(y)
+# x = 5
+# f(x)
+# print(x)
+
+# def g(y):
+#     print(x)
+#     print(x + 1)
+# x = 5
+# g(x)
+# print(x)
+# def h(y):
+#     x += 1
+# x = 5
+# h(x)
+# print(x)
+
+# def quotient_and_remainder(x, y):
+#     q = x // y
+#     r = x % y
+#     return (q, r)
+# (quot, rem) = quotient_and_remainder(4,5)
+# print((quot, rem))
+
+# (x, y) = (4, rem)
+# print((x, y))
+
+# def get_data(aTuple):
+#     nums = ()
+#     words = ()
+#     for t in aTuple:
+#         nums = nums + (t[0],)
+#         if t[1] not in words:
+#             words = words + (t[1],)
+#     min_n = min(nums)
+#     max_n = max(nums)
+#     unique_words = len(words)
+#     return (min_n, max_n, unique_words)
+
+# print(get_data(((3,4),(5,6),(7,8))))
+
+# Computing the sum of elements
+
+l = [1,2,3,4,5]
+
+# def sum_list(a_list): 
+#     sum_list = 0
+#     for i in a_list: 
+#         sum_list += i
+#     return sum_list
+
+# a = sum_list(l)
+# print(a)
+
+L = []
+
+l.extend([0,6])
+
+print(l)
+
+l.remove(3)
+print(l)
