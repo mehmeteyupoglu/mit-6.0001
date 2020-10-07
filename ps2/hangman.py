@@ -88,8 +88,7 @@ def get_guessed_word(secret_word, letters_guessed):
     word_as_arr = list(secret_word)
     for i in range(len(word_as_arr)):
         for j in letters_guessed:
-            if word_as_arr[i] != j: 
-                
+            if word_as_arr[i] != j:    
                 word_as_arr[i] = '_ '
                 
             else: 
