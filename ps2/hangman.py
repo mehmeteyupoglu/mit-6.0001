@@ -86,16 +86,26 @@ def get_guessed_word(secret_word, letters_guessed):
       which letters in secret_word have been guessed so far.
     '''
     word_as_arr = list(secret_word)
-    for i in range(len(word_as_arr)):
-        for j in letters_guessed:
-            if word_as_arr[i] != j:    
-                word_as_arr[i] = '_ '
-                
-            else: 
-                print(j)
-                word_as_arr
-               
-    return ''.join(word_as_arr)
+    
+    a = '_ '*len(word_as_arr)
+    
+    try:
+        for i in range(len(word_as_arr)): 
+            for j in letters_guessed: 
+                if word_as_arr[i] == j: 
+                    a[i] = '_ '
+                    print(" ")
+                    print("i: ", i)
+                    print("j: ", j)
+                    
+                else: 
+                    
+                    print("a is", a)
+                    print("The mutual letter", i)
+    except: 
+        print("There is a bug in your code.")
+
+    return ''.join(a)
     
 
 secret_word = 'apple'  
