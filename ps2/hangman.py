@@ -87,25 +87,17 @@ def get_guessed_word(secret_word, letters_guessed):
     '''
     word_as_arr = list(secret_word)
     
-    a = '_ '*len(word_as_arr)
+    b = list(set(secret_word) - set(letters_guessed))
     
-    try:
-        for i in range(len(word_as_arr)): 
-            for j in letters_guessed: 
-                if word_as_arr[i] == j: 
-                    a[i] = '_ '
-                    print(" ")
-                    print("i: ", i)
-                    print("j: ", j)
-                    
-                else: 
-                    
-                    print("a is", a)
-                    print("The mutual letter", i)
-    except: 
-        print("There is a bug in your code.")
-
-    return ''.join(a)
+    for i in b: 
+        for j in range(len(word_as_arr)): 
+            if i == word_as_arr[j]: 
+                word_as_arr[j] = "_ "
+            
+                
+            
+    return ''.join(word_as_arr)
+            
     
 
 secret_word = 'apple'  
