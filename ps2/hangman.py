@@ -160,30 +160,43 @@ def hangman(secret_word):
             
         user_input = str(input('Guess a letter: '))
         
-        while(len(user_input) != 1 or user_input in letters_guessed or user_input not in letters_available): 
-        
-            user_input = str(input('Guess a letter'))
-            warning -= 1
-            print(warning)
+        while(user_input in letters_guessed): 
+            print("You have", warning, "warnings left.")
+            print("You have", guesses_left, "guesses left.")
+            user_input = str(input('Oops! That letter is not in my word: '))
+            if warning > 0:     
+                warning -= 1
+            else: 
+                guesses_left -= 1
             
-            if warning == 0: 
+            if guesses_left == 0:
+                break
+                
+        while(len(user_input) != 1 or user_input not in letters_available): 
+            print("You have", warning, "warnings left.")
+            print("You have", guesses_left, "guesses left.")
+            user_input = str(input('You can only use lowercase alphabet. Try again: '))
+            if warning > 0:     
+                warning -= 1
+            else: 
+                guesses_left -= 1
+            
+            if guesses_left == 0:
                 break
             
-        if warning == 0:
-            print("Invalid input. Game is closing... Run the game again.")
-            break 
+            
+        if guesses_left == 0: 
+            print('The secret word is: ', secret_word)
+            break
         
         letters_guessed.append(user_input)
         print(letters_guessed)
         print(get_guessed_word(secret_word, letters_guessed))
         guesses_left -= 1
         print(" ")
-        print('warning => ', warning)
+        print("You have", guesses_left, "guesses left.")
         
-        
-        
-    if guesses_left == 0: 
-        print('The secret word is: ', secret_word)   
+    
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
