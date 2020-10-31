@@ -94,15 +94,11 @@ def get_guessed_word(secret_word, letters_guessed):
             if i == word_as_arr[j]: 
                 word_as_arr[j] = "_ "
             
-                
-            
     return ''.join(word_as_arr)
             
-    
-
-secret_word = 'apple'  
-letters_guessed = ['e', 'i', 'k', 'p', 'r', 's'] 
-print(get_guessed_word(secret_word, letters_guessed))
+# secret_word = 'apple'  
+# letters_guessed = ['e', 'i', 'k', 'p', 'r', 's'] 
+# print(get_guessed_word(secret_word, letters_guessed))
 
 def get_available_letters(letters_guessed):
     '''
@@ -110,10 +106,18 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
     
-    
+    lowercase_letters = string.ascii_lowercase
+    lowercase_list = list(lowercase_letters)
+
+    for i in letters_guessed: 
+        if i in lowercase_list: 
+            lowercase_list.remove(i)
+    return ''.join(lowercase_list)
+
+letters_guessed = ['e', 'i', 'k', 'p', 'r', 's']
+# print(get_available_letters(letters_guessed))
+# abcdfghjlmnoqtuvwxyz   
 
 def hangman(secret_word):
     '''
@@ -140,10 +144,46 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
-
+    
+    print("Welcome to the game Hangman!")
+    print("I am thinking of a word of", len(secret_word), "letters")
+    
+    guesses_left = 6
+    letters_guessed = []
+    warning = 3
+    
+    while(guesses_left > 0): 
+        print("#"*20)
+        letters_available = get_available_letters(letters_guessed)
+        print('You have', guesses_left, 'guesses')
+        print('Available letters:', letters_available)
+            
+        user_input = str(input('Guess a letter: '))
+        
+        while(len(user_input) != 1 or user_input in letters_guessed or user_input not in letters_available): 
+        
+            user_input = str(input('Guess a letter'))
+            warning -= 1
+            print(warning)
+            
+            if warning == 0: 
+                break
+            
+        if warning == 0:
+            print("Invalid input. Game is closing... Run the game again.")
+            break 
+        
+        letters_guessed.append(user_input)
+        print(letters_guessed)
+        print(get_guessed_word(secret_word, letters_guessed))
+        guesses_left -= 1
+        print(" ")
+        print('warning => ', warning)
+        
+        
+        
+    if guesses_left == 0: 
+        print('The secret word is: ', secret_word)   
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
