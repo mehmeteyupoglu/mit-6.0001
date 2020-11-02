@@ -65,13 +65,14 @@ def is_word_guessed(secret_word, letters_guessed):
       False otherwise
     '''
     # FILL IN YOUR CODE HERE AND DELETE "pass"
-    for i in letters_guessed: 
-        for j in secret_word: 
-            if i == j: 
-                return True
-            else: 
-                return False
+    word_guessed = True
     
+    for i in secret_word: 
+        if i not in letters_guessed: 
+            word_guessed = False
+        else: 
+            word_guessed
+    return word_guessed
 # secret_word = 'apple' 
 # letters_guessed = ['a', 'p', 'l', 'p', 'e' ]
 # print(is_word_guessed(secret_word, letters_guessed))
@@ -119,6 +120,15 @@ letters_guessed = ['e', 'i', 'k', 'p', 'r', 's']
 # print(get_available_letters(letters_guessed))
 # abcdfghjlmnoqtuvwxyz   
 
+def unique_word_numbers(secret_word): 
+    unique_words = []
+    
+    for i in secret_word: 
+        if i not in unique_words: 
+            unique_words.append(i)
+    return len(unique_words)
+
+
 def hangman(secret_word):
     '''
     secret_word: string, the secret word to guess.
@@ -145,22 +155,23 @@ def hangman(secret_word):
     Follows the other limitations detailed in the problem write-up.
     '''
     
-    print("Welcome to the game Hangman!")
-    print("I am thinking of a word of", len(secret_word), "letters")
-    
     guesses_left = 6
     letters_guessed = []
     warning = 3
+    vowels = ['a','e','i','o','u']
     
-    while(guesses_left > 0): 
+    print("Welcome to the game Hangman!")
+    print("I am thinking of a word of", len(secret_word), "letters")
+    print("You have", warning, " warnings left")
+    
+    while(guesses_left > 0 and is_word_guessed(secret_word, letters_guessed) != True): 
         letters_available = get_available_letters(letters_guessed)
-        
-            
+        print('The secret word is: ', secret_word)
+          
         user_input = str(input('Guess a letter: ')).lower()
         
         while(user_input in letters_guessed): 
-            print("You have", warning, "warnings left.")
-            print("You have", guesses_left, "guesses left.")
+            
             user_input = str(input('Oops! You already guessed that letter:')).lower()
             if warning > 0:     
                 warning -= 1
@@ -168,6 +179,9 @@ def hangman(secret_word):
                 pass
             else: 
                 guesses_left -= 1
+                
+            print("You have", warning, "warnings left.")
+            print("You have", guesses_left, "guesses left.")
             
             if guesses_left == 0:
                 break
@@ -189,11 +203,7 @@ def hangman(secret_word):
                 user_input = str(input('Oops! You already guessed that letter: ')).lower()
             user_input = str(input('You can only use lowercase alphabet. Try again: ')).lower()
             
-            
-        # if guesses_left == 0: 
-        #     print('The secret word is: ', secret_word)
-        #     break
-        
+
         letters_guessed.append(user_input)
         display_word_partly = get_guessed_word(secret_word, letters_guessed)
         
@@ -201,25 +211,24 @@ def hangman(secret_word):
         if user_input in secret_word: 
             print('Good guess:', display_word_partly)
         else: 
-            print('Oops! That letter is not in my word:', display_word_partly)
-        
-        guesses_left -= 1
+            if user_input in vowels: 
+                print('Oops! That letter is not in my word:', display_word_partly)
+                guesses_left -= 2
+            else: 
+                print('Oops! That letter is not in my word:', display_word_partly)
+                guesses_left -= 1
         print("You have", guesses_left, "guesses left.")
         print('Available letters:', letters_available)
         print("-"*20)
-        
-    print('The secret word is: ', secret_word)
-        
     
-
-# When you've completed your hangman function, scroll down to the bottom
-# of the file and uncomment the first two lines to test
-#(hint: you might want to pick your own
-# secret_word while you're doing your own testing)
-
-
-# -----------------------------------
-
+    if is_word_guessed(secret_word, letters_guessed): 
+        score = unique_word_numbers(secret_word) * guesses_left
+        print('Congratulations, you won!')
+        print('Your total score for this game is:', score )
+    elif guesses_left == 0 and '_ ' in display_word_partly: 
+        print('You lost!')
+        print('The secret word is: ', secret_word)    
+    
 
 
 def match_with_gaps(my_word, other_word):
@@ -231,10 +240,28 @@ def match_with_gaps(my_word, other_word):
         _ , and my_word and other_word are of the same length;
         False otherwise: 
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-
-
+    return_value = False
+    stripped_word = my_word.replace(" ", "")
+    chars = stripped_word.replace("_", "")
+    
+    if len(stripped_word) == len(other_word): 
+        for i in chars: 
+            print('strip word: ', stripped_word)
+            print('chars: ', chars)
+            print(other_word.count(i))
+            print('i: ', i)
+            if i not in other_word: 
+                return False
+                break
+            elif other_word.count(i) >= 2: 
+                return False
+                break
+            else: 
+                return_value = True
+    else: 
+        return False
+    
+    return return_value
 
 def show_possible_matches(my_word):
     '''
@@ -295,13 +322,13 @@ if __name__ == "__main__":
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
     
-    secret_word = choose_word(wordlist)
-    hangman(secret_word)
+    # secret_word = choose_word(wordlist)
+    # hangman(secret_word)
 
 ###############
     
     # To test part 3 re-comment out the above lines and 
     # uncomment the following two lines. 
     
-    #secret_word = choose_word(wordlist)
-    #hangman_with_hints(secret_word)
+    secret_word = choose_word(wordlist)
+    hangman_with_hints(secret_word)
