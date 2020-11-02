@@ -158,14 +158,16 @@ def hangman(secret_word):
         print('You have', guesses_left, 'guesses')
         print('Available letters:', letters_available)
             
-        user_input = str(input('Guess a letter: '))
+        user_input = str(input('Guess a letter: ')).lower()
         
         while(user_input in letters_guessed): 
             print("You have", warning, "warnings left.")
             print("You have", guesses_left, "guesses left.")
-            user_input = str(input('Oops! That letter is not in my word: '))
+            user_input = str(input('Oops! That letter is not in my word:')).lower()
             if warning > 0:     
                 warning -= 1
+            elif user_input not in letters_available: 
+                pass
             else: 
                 guesses_left -= 1
             
@@ -173,9 +175,7 @@ def hangman(secret_word):
                 break
                 
         while(len(user_input) != 1 or user_input not in letters_available): 
-            print("You have", warning, "warnings left.")
-            print("You have", guesses_left, "guesses left.")
-            user_input = str(input('You can only use lowercase alphabet. Try again: '))
+            
             if warning > 0:     
                 warning -= 1
             else: 
@@ -184,10 +184,15 @@ def hangman(secret_word):
             if guesses_left == 0:
                 break
             
+            print("You have", warning, "warnings left.")
+            print("You have", guesses_left, "guesses left.")
+            user_input = str(input('You can only use lowercase alphabet. Try again: ')).lower()
             
-        if guesses_left == 0: 
-            print('The secret word is: ', secret_word)
-            break
+            
+        # if guesses_left == 0: 
+        #     print('The secret word is: ', secret_word)
+        #     break
+        
         
         letters_guessed.append(user_input)
         print(letters_guessed)
@@ -195,6 +200,8 @@ def hangman(secret_word):
         guesses_left -= 1
         print(" ")
         print("You have", guesses_left, "guesses left.")
+        
+    print('The secret word is: ', secret_word)
         
     
 
