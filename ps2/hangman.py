@@ -153,17 +153,15 @@ def hangman(secret_word):
     warning = 3
     
     while(guesses_left > 0): 
-        print("#"*20)
         letters_available = get_available_letters(letters_guessed)
-        print('You have', guesses_left, 'guesses')
-        print('Available letters:', letters_available)
+        
             
         user_input = str(input('Guess a letter: ')).lower()
         
         while(user_input in letters_guessed): 
             print("You have", warning, "warnings left.")
             print("You have", guesses_left, "guesses left.")
-            user_input = str(input('Oops! That letter is not in my word:')).lower()
+            user_input = str(input('Oops! You already guessed that letter:')).lower()
             if warning > 0:     
                 warning -= 1
             elif user_input not in letters_available: 
@@ -186,6 +184,9 @@ def hangman(secret_word):
             
             print("You have", warning, "warnings left.")
             print("You have", guesses_left, "guesses left.")
+            
+            if user_input in letters_guessed: 
+                user_input = str(input('Oops! You already guessed that letter: ')).lower()
             user_input = str(input('You can only use lowercase alphabet. Try again: ')).lower()
             
             
@@ -193,13 +194,19 @@ def hangman(secret_word):
         #     print('The secret word is: ', secret_word)
         #     break
         
-        
         letters_guessed.append(user_input)
+        display_word_partly = get_guessed_word(secret_word, letters_guessed)
+        
         print(letters_guessed)
-        print(get_guessed_word(secret_word, letters_guessed))
+        if user_input in secret_word: 
+            print('Good guess:', display_word_partly)
+        else: 
+            print('Oops! That letter is not in my word:', display_word_partly)
+        
         guesses_left -= 1
-        print(" ")
         print("You have", guesses_left, "guesses left.")
+        print('Available letters:', letters_available)
+        print("-"*20)
         
     print('The secret word is: ', secret_word)
         
