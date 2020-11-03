@@ -339,22 +339,29 @@ def hangman_with_hints(secret_word):
             if guesses_left == 0:
                 break
                 
-        while(len(user_input) != 1 or user_input not in letters_available): 
+        while(len(user_input) != 1 or user_input not in letters_available):
             
-            if warning > 0:     
-                warning -= 1
+            if user_input == "*": 
+                print('Possible matches are: ')
+                print(show_possible_matches(get_guessed_word(secret_word, letters_guessed)))
+                user_input = str(input('Guess a letter: ')).lower()
+                
             else: 
-                guesses_left -= 1
             
-            if guesses_left == 0:
-                break
-            
-            print("You have", warning, "warnings left.")
-            print("You have", guesses_left, "guesses left.")
-            
-            if user_input in letters_guessed: 
-                user_input = str(input('Oops! You already guessed that letter: ')).lower()
-            user_input = str(input('You can only use lowercase alphabet. Try again: ')).lower()
+                if warning > 0:     
+                    warning -= 1
+                else: 
+                    guesses_left -= 1
+                
+                if guesses_left == 0:
+                    break
+                
+                print("You have", warning, "warnings left.")
+                print("You have", guesses_left, "guesses left.")
+                
+                if user_input in letters_guessed: 
+                    user_input = str(input('Oops! You already guessed that letter: ')).lower()
+                user_input = str(input('You can only use lowercase alphabet. Try again: ')).lower()
             
 
         letters_guessed.append(user_input)
