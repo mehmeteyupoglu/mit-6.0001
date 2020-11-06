@@ -95,7 +95,9 @@ def get_word_score(word, n):
     first_component = 0
     
     for i in word.lower(): 
-        first_component += SCRABBLE_LETTER_VALUES[i]
+        if i in CONSONANTS or i in VOWELS:     
+            first_component += SCRABBLE_LETTER_VALUES[i]
+        else: pass
     
     second_component = 7 * len(word) - 3 * (n - len(word)) 
     
@@ -103,7 +105,6 @@ def get_word_score(word, n):
         second_component = 1
     
     return first_component * second_component
-
 
 #
 # Make sure you understand how this function works and what it does!
@@ -204,31 +205,30 @@ def is_valid_word(word, hand, word_list):
     """
 
     word_list = load_words() #returns an array
-    handCopy = hand.copy()
-    new_hand = display_hand(handCopy) #returns an array
-    return_value = False
-   
+    hand_copy = hand.copy()
     
-    def Convert(word): 
-        li = list(word.split(" ")) 
-        return li
+    return_value = True
     
-    word = Convert(word.lower())
-    
-    for i in word: 
-        if i not in new_hand: 
-            return False
-        else: 
-            print('word: ', word)
-            word = word.remove(i)
-            return_value = True
-    
-    if word not in word_list: 
-        return_value = False
-    
+    word = word.lower()
+    word_as_dictionary = get_frequency_dict(word)
+
+    if word in word_list:  
+        for i in word_as_dictionary.keys(): 
+            if hand_copy.get(i, 0) == word_as_dictionary.get(i, 0) or hand_copy.get(i, 0) > word_as_dictionary.get(i, 0): 
+                return_value
+            else: 
+                # print('else i is ', hand_copy.get(i, 0))
+                return False
+    else: 
+        if '*' in word: 
+            for i in VOWELS: 
+                updated_word = word.replace('*', i)
+                if updated_word in word_list: 
+                    return updated_word
+        return False
+ 
     return return_value
 
-#
 # Problem #5: Playing a hand
 #
 def calculate_handlen(hand):
