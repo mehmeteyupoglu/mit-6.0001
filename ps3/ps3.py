@@ -296,32 +296,30 @@ def play_hand(hand, word_list):
                 n = calculate_handlen(hand)
                 score += get_word_score(user_input, n)
                 hand = update_hand(hand, user_input)
-                print('updated hand ', update_hand(hand, user_input))
+                print('updated hand ', hand)
                 print('You earned: ', get_word_score(user_input, n))
+                print(user_input, 'earned', get_word_score(user_input, n), 'points. Total:', score, 'points')
                 
             else:     
                 hand = update_hand(hand, user_input)
                 print(user_input, ' is invalid!')
                 update_hand(hand, user_input)
-            print(user_input, 'earned', get_word_score(user_input, n), 'points. Total:', score, 'points')
-    if end_game == True or calculate_handlen(hand) < 1: 
-        print('The game is ending...')
+            
+    if end_game == True: 
         print('Your total score is: ', score)
         return score
     
-# hand = hand = {'c': 1, 'o': 1, '*': 1, 'w': 1, 's':1, 'z':1, 'y': 2}
+    if calculate_handlen(hand) < 1: 
+        print('You run out of letters.')
+        print('Your total score is: ', score)
+        return score
+    
+# hand = {'c': 1, 'o': 1, '*': 1, 'w': 1, 's':1, 'z':1, 'y': 2}
 # word_list = load_words()
 
 # play_hand(hand, word_list)
 
-#
 # Problem #6: Playing a game
-# 
-
-
-#
-# procedure you will use to substitute a letter in a hand
-#
 
 def substitute_hand(hand, letter):
     """ 
@@ -346,7 +344,27 @@ def substitute_hand(hand, letter):
     returns: dictionary (string -> int)
     """
     
-    pass  # TO DO... Remove this line when you implement this function
+    hand_letter = display_hand(hand)
+    hand_copy = hand.copy()
+    letters = string.ascii_lowercase
+    
+    try: 
+        for i in hand_letter: 
+            if i in letters: 
+                letters = letters.replace(i, '')
+        
+        random_letter = random.choice(letters)
+        
+        if random_letter in hand_letter: 
+            return hand_copy
+        else: 
+            hand_copy[random_letter] = hand_copy[letter]
+            hand_copy.pop(letter)
+    except KeyError: 
+        print('You entered a character not in the hand. Give a letter that exist in the hand. ')
+    
+    return hand_copy
+        
        
     
 def play_game(word_list):
