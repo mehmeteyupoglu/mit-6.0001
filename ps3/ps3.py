@@ -283,9 +283,6 @@ def play_hand(hand, word_list):
         
     while calculate_handlen(hand) > 0: 
 
-        
-        print("Current hand: ", display_hand(hand))
-
         user_input = input('Enter word, or "!!" to indicate that you are finished: ')
 
         if user_input == "!!": 
@@ -306,12 +303,13 @@ def play_hand(hand, word_list):
                 update_hand(hand, user_input)
             
     if end_game == True: 
-        print('Your total score is: ', score)
+        print('Total score for this hand:', score)
+        print('-' * 50)
         return score
     
     if calculate_handlen(hand) < 1: 
-        print('You run out of letters.')
-        print('Your total score is: ', score)
+        print('Ran out of letters ')
+        print('Total score for this hand:', score)
         return score
     
 # hand = {'c': 1, 'o': 1, '*': 1, 'w': 1, 's':1, 'z':1, 'y': 2}
@@ -365,8 +363,25 @@ def substitute_hand(hand, letter):
     
     return hand_copy
         
-       
+def add_asterisk(hand): 
+
+    running = True
     
+    hand_copy = hand.copy()
+    hand_keys = display_hand(hand_copy)
+    
+    while running: 
+        random_key = random.choice(hand_keys)
+        if random_key in VOWELS and hand_copy.get(random_key, 0) == 1:
+            print(random_key)
+            hand_copy['*'] = hand_copy[random_key]
+            hand_copy.pop(random_key)
+            break
+    return hand_copy
+
+# hand = deal_hand(HAND_SIZE)
+# add_asterisk(hand)
+        
 def play_game(word_list):
     """
     Allow the user to play a series of hands
@@ -398,15 +413,46 @@ def play_game(word_list):
     word_list: list of lowercase strings
     """
     
-    print("play_game not implemented.") # TO DO... Remove this line when you implement this function
+    number_of_hands = input('Enter total number of hands: ')
+    number_of_hands = int(number_of_hands)
+    total_score = 0
     
+    
+    
+    
+    while number_of_hands > 0:
+        print('Hand number:', number_of_hands)
 
+        hand = deal_hand(HAND_SIZE)
+        hand = add_asterisk(hand)
+        word_list = load_words()
+        current_hand = display_hand(hand)
+        print('Current hand: ', current_hand)
+        
+        substitute = input('Would you like to substitute a letter?')
+        
+        if substitute.lower() == 'yes': 
+            letter_asked = input('Which letter would you like to replace: ')
+            while letter_asked not in string.ascii_lowercase: 
+                letter_asked = input('The word to replace should be an alphabet: ')    
+            hand = substitute_hand(hand, letter_asked)
+            print('Substituted hand:', hand)
+        
+        play_hand(hand, word_list)
+        
+        one_more_time = input('Would you like to replay the hand? ')
+        
+        if one_more_time.lower() == 'yes':
+            play_hand(hand, word_list)
+            
+        total_score += play_hand(hand, word_list)
+        number_of_hands -= 1
+    
+    if number_of_hands == 0: 
+        print('Your overall score is ', total_score)
+        
+#
 
-#
-# Build data structures used for entire session and play game
-# Do not remove the "if __name__ == '__main__':" line - this code is executed
-# when the program is run directly, instead of through an import statement
-#
 if __name__ == '__main__':
     word_list = load_words()
     play_game(word_list)
