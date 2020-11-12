@@ -22,40 +22,25 @@ def get_permutations(sequence):
     Note: depending on your implementation, you may return the permutations in
     a different order than what is listed here.
     '''
-    # print('Sequence =>', sequence)
-    # length = len(sequence)
-    # permutation_list = []
-    # character = sequence[0]
-    # sequence1 = sequence[1:]
-    
-    # if len(sequence) == 1: 
-    #     return [sequence]
-    # else: 
-        
-    #     for i in range(length): 
-            
-    #         new_str = sequence1[0:i] + character + sequence1[i:length]
-    #         permutation_list.append(new_str)
-    
-    #     print('permutation list', permutation_list)
-    #     print('-'*50)
-    #     return get_permutations(sequence1)
+    print('Sequence ', sequence)
     
     first_letter = sequence[0]
-    permutations = get_permutations(sequence[1:])
+    
     
     permutation_list = []
     
     if len(sequence) == 1: 
         permutation_list.append(sequence)
         return permutation_list
+    
     else: 
+        permutations = get_permutations(sequence[1:])
         for perm in permutations: 
             length = len(perm)
-            for i in range(length): 
+            for i in range(length+1): 
                 new_str = perm[0:i] + first_letter + perm[i:length]
                 permutation_list.append(new_str)
-        return permutation_list         
+    return permutation_list         
             
     
      
