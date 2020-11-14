@@ -1,5 +1,5 @@
 # Problem Set 4B
-# Name: <your name here>
+# Name: Mehmet Eyupoglu
 # Collaborators:
 # Time Spent: x:xx
 
@@ -50,10 +50,14 @@ def get_story_string():
     """
     Returns: a story in encrypted text.
     """
-    f = open("story.txt", "r")
-    story = str(f.read())
-    f.close()
-    return story
+    try: 
+        f = open("story.txt", "r")
+        story = str(f.read())
+        f.close()
+        return story
+    except : 
+        print('Check the file document!')
+
 
 ### END HELPER CODE ###
 
@@ -70,15 +74,15 @@ class Message(object):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
-
+        self.message_text = text
+        self.valid_words = load_words(WORDLIST_FILENAME)
     def get_message_text(self):
         '''
         Used to safely access self.message_text outside of the class
         
         Returns: self.message_text
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text
 
     def get_valid_words(self):
         '''
@@ -87,7 +91,7 @@ class Message(object):
         
         Returns: a COPY of self.valid_words
         '''
-        pass #delete this line and replace with your code here
+        return self.valid_words
 
     def build_shift_dict(self, shift):
         '''
@@ -103,8 +107,24 @@ class Message(object):
         Returns: a dictionary mapping a letter (string) to 
                  another letter (string). 
         '''
-        pass #delete this line and replace with your code here
-
+        
+        lowercase = string.ascii_lowercase 
+        uppercase = string.ascii_uppercase
+        shift_dict = dict()
+        
+                
+        for i in range(len(lowercase)): 
+            index = (i + shift) % 26
+            char = lowercase[i]
+            shift_dict[char] = lowercase[index]
+            
+        for i in range(len(uppercase)): 
+            index = (i + shift) % 26
+            char = uppercase[i]
+            shift_dict[char] = uppercase[index]
+                
+        return shift_dict
+                 
     def apply_shift(self, shift):
         '''
         Applies the Caesar Cipher to self.message_text with the input shift.
@@ -117,8 +137,16 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        pass #delete this line and replace with your code here
+        letters = self.build_shift_dict(shift)
+        message = self.get_message_text()
+        ciphered_message = ''
+        for i in message: 
+            ciphered_message += letters[i]
+        
+        return ciphered_message
 
+
+           
 class PlaintextMessage(Message):
     def __init__(self, text, shift):
         '''
@@ -135,7 +163,8 @@ class PlaintextMessage(Message):
             self.message_text_encrypted (string, created using shift)
 
         '''
-        pass #delete this line and replace with your code here
+        self.text = Message.get_message_text()
+        self.shift = shift
 
     def get_shift(self):
         '''
@@ -143,7 +172,7 @@ class PlaintextMessage(Message):
         
         Returns: self.shift
         '''
-        pass #delete this line and replace with your code here
+        return self.shift
 
     def get_encryption_dict(self):
         '''
@@ -151,15 +180,17 @@ class PlaintextMessage(Message):
         
         Returns: a COPY of self.encryption_dict
         '''
-        pass #delete this line and replace with your code here
+        return self.build_shift_dict(self.get_shift())
 
     def get_message_text_encrypted(self):
         '''
         Used to safely access self.message_text_encrypted outside of the class
         
         Returns: self.message_text_encrypted
+        
         '''
-        pass #delete this line and replace with your code here
+        print(self)
+        return self.apply_shift(self.shift)
 
     def change_shift(self, shift):
         '''
@@ -171,8 +202,10 @@ class PlaintextMessage(Message):
 
         Returns: nothing
         '''
-        pass #delete this line and replace with your code here
+        self.shift = shift
 
+message = PlaintextMessage('Hello', 2)
+print(message.get_message_text_encrypted())
 
 class CiphertextMessage(Message):
     def __init__(self, text):
