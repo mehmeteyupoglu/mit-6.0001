@@ -1,7 +1,7 @@
 # Problem Set 4B
 # Name: Mehmet Eyupoglu
 # Collaborators:
-# Time Spent: x:xx
+# Time Spent: 2:00
 
 import string
 
@@ -256,13 +256,25 @@ if __name__ == '__main__':
     plaintext = PlaintextMessage('hello', 2)
     print('Expected Output: jgnnq')
     print('Actual Output:', plaintext.get_message_text_encrypted())
+    
+    # Example test case (PlaintextMessage)
+    plaintext_test = PlaintextMessage('Mehmet', 4)
+    print('Expected Output: Qilqix ')
+    print('Actual Output:', plaintext_test.get_message_text_encrypted())
+    
+    plaintext_test2 = PlaintextMessage('Python', 14)
+    print('Expected Output: Dmhvcb ')
+    print('Actual Output:', plaintext_test2.get_message_text_encrypted())
 #
     #Example test case (CiphertextMessage)
     ciphertext = CiphertextMessage('jgnnq')
     print('Expected Output:', (24, 'hello'))
     print('Actual Output:', ciphertext.decrypt_message())
+    
+    ciphertext_test2 = CiphertextMessage('Dmhvcb')
+    print('Expected Output:', (12, 'Python'))
+    print('Actual Output:', ciphertext_test2.decrypt_message())
 
-    #TODO: WRITE YOUR TEST CASES HERE
 
     #TODO: best shift value and unencrypted story 
     

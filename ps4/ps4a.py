@@ -22,7 +22,6 @@ def get_permutations(sequence):
     Note: depending on your implementation, you may return the permutations in
     a different order than what is listed here.
     '''
-    print('Sequence ', sequence)
     
     first_letter = sequence[0]
     
@@ -42,13 +41,7 @@ def get_permutations(sequence):
                 permutation_list.append(new_str)
     return permutation_list         
             
-    
-     
-    
-    
 
-    
- 
 if __name__ == '__main__':
 #    #EXAMPLE
 #    example_input = 'abc'
