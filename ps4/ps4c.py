@@ -134,7 +134,6 @@ class SubMessage(object):
         on the dictionary
         '''
         message = self.get_message_text()
-        transpose_dict
         
         for i in message: 
             if i.isalnum(): 
@@ -179,9 +178,25 @@ class EncryptedSubMessage(SubMessage):
         
         Hint: use your function from Part 4A
         '''
-        permutations = get_permutations('eaiou')
+        permutations = get_permutations(VOWELS_LOWER)
+        max_valid_words = 0
+        decrypt_msg = ''
         
-        return permutations
+        for perm in permutations: 
+            trans_dict = self.build_transpose_dict(perm)
+            trans_message = self.apply_transpose(trans_dict)
+            words = trans_message.split()
+            
+            word_count = 0
+            for word in words:
+                if is_word(self.get_valid_words(), word): 
+                    word_count += 1
+            
+            if word_count > max_valid_words: 
+                max_valid_words = word_count
+                decrypt_msg = trans_message
+
+        return decrypt_msg
     
 
 if __name__ == '__main__':
